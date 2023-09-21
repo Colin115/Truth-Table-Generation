@@ -12,7 +12,9 @@ class Proposition:
         self.truth = truth
         
     def get_truth(self):
-        return self.truth        
+        return self.truth 
+    
+      
     
      
 
