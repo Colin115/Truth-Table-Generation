@@ -1,5 +1,5 @@
 from relations import *
-
+import time
 def identify_props(phrase) -> set:
     props = set()
     letters = 'abcdefghijlkmnopqrstuwxyz'
@@ -44,7 +44,9 @@ def indentify_groups(phrase) -> str:
     while any(condition in phrase for condition in conditions):
         inner = None
         
-        for i, letter in enumerate(phrase):
+        i = 0
+        while i < len(phrase):
+            letter = phrase[i]
             if letter == "(":
                 inner = i
             if letter == ")":
@@ -52,27 +54,36 @@ def indentify_groups(phrase) -> str:
                 print(*condition)
                 print(*phrase)
                 phrase = phrase[:inner] + [make_compound_props(condition)] + phrase[i+1:]
+            i += 1
     
     conditions = ['^', "v"]
     while any(condition in phrase for condition in conditions):
-        for i, letter in enumerate(phrase):
+        i = 0
+        while i < len(phrase):
+            letter = phrase[i]
             if letter in ("v", "^"):
                 condition = phrase[i-1:i+2]
                 phrase = phrase[:i-1] + [make_compound_props(condition)] + phrase[i+2:]
+                i -= 1
+            i += 1
                 
     #make sure conditions are only -> and <->
     while "-" in phrase:
         
-        for i, letter in enumerate(phrase):
+        i = 0
+        while i < len(phrase):
+            letter = phrase[i]
             if letter == "-": #conditional a - > b
                 condition = phrase[i-1:i+3]
                 
                 phrase = phrase[:i-1] + [make_compound_props(condition)] + phrase[i+3:]
+                i -= 2
                 
             elif letter == "<": #bicondition
                 condition = phrase[i-1:i+4]
                 phrase = phrase[:i-1] + [make_compound_props(condition)] + phrase[i+4:] 
-            
+                i -= 3
+            i += 1
             
     return phrase
                 
@@ -121,7 +132,7 @@ def display_table(table):
 
 
 def main():
-    x = "(r^w) ^ ~l -> (x v ~r)" #phrase to be used
+    x = "p ^ (q v r) -> w" #phrase to be used
     
     
     props = identify_props(x) # identify each proposition in the phrase
