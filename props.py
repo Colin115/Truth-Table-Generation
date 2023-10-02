@@ -156,7 +156,7 @@ def gen_props_and_phrase(x="pvq", previous_props=set()) -> tuple:
     
     
 def main():
-    props, final_prop = gen_props_and_phrase(x="pvq ^ (r v w) -> x")
+    props, final_prop = gen_props_and_phrase(x="p->q")
     table = generate_table(props, final_prop)
     print(display_table(table))
         

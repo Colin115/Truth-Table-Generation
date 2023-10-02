@@ -14,9 +14,6 @@ class Proposition:
     def get_truth(self):
         return self.truth 
     
-      
-    
-     
 
 ## make it so when proposition value changes the not value changes
 class Not:
