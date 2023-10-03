@@ -25,9 +25,9 @@ def make_compound_props(phrase) -> str:
         return And(arg1, arg2)
     elif sign == "v": # or
         return Or(arg1, arg2)
-    elif sign == "->" or sign == "-->":
+    elif sign == "->":
         return Conditional(arg1, arg2)
-    elif sign in ("<->", "<-->"):
+    elif sign == "<->":
         return Biconditional(arg1, arg2)
     else:
         raise ValueError(f"Invalid symbol found: {sign}")

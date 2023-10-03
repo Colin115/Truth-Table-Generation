@@ -11,6 +11,7 @@ def is_valid(table: list[list[bool]]):
             return False
     return True
 
+
 def generate_table_with_hyp(props, hypothesis, phrase, with_props=True) -> list[list[bool]]:
     rows = 2**(len(props))
     columns = len(props)
@@ -51,26 +52,21 @@ def generate_table_with_hyp(props, hypothesis, phrase, with_props=True) -> list[
 def make_props_table(props: set, hypothesis, conclusion):   
     table = generate_table_with_hyp(props, hypothesis, conclusion, with_props=False)
     return table
-def test():
-    #hypothesis
-    p1 = "q"
-    p2 = "p -> q"
-    
-    props1, conc1 = gen_props_and_phrase(p1)
-    props2, conc2 = gen_props_and_phrase(p2)
-    props1.union(props2)
-    #conclusion
-    c = "p"
-    props3, conclusion = gen_props_and_phrase(c)
-    props1.union(props3)
-    
-    table = make_props_table(props1, [conc1, conc2], conclusion)
-    print(display_table(table))
-    print(is_valid(table))
-    
 
-
-test()
     
-        
-            
+def makeArgument(hypothesis: list[str], conclusion: str):
+    props = set() # holds all the letters like p, q, r, t
+    formated_hypothesis = [] # holds the hypothesis like p->q
+    
+    # generate the hypothesis
+    for hyp in hypothesis:
+        ps, hs = gen_props_and_phrase(hyp)
+        props |= ps
+        formated_hypothesis.append(hs)
+    #make conclusions
+    ps, formated_conclusion = gen_props_and_phrase(conclusion)
+    props.union(ps)
+    #generate table
+    table = make_props_table(props, formated_hypothesis, formated_conclusion)
+    return table
+    
